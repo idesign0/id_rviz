@@ -79,6 +79,10 @@ endif()
 if(APPLE)
   list(APPEND OGRE_CMAKE_ARGS -DOGRE_ENABLE_PRECOMPILED_HEADERS:BOOL=OFF)
   list(APPEND OGRE_CMAKE_ARGS -DCMAKE_OSX_ARCHITECTURES=arm64;x86_64)
+  # Explicitly pass sysroot so Ogre doesn't call deprecated xcodebuild -n (removed in Xcode 26)
+  if(CMAKE_OSX_SYSROOT)
+    list(APPEND OGRE_CMAKE_ARGS "-DCMAKE_OSX_SYSROOT=${CMAKE_OSX_SYSROOT}")
+  endif()
 endif()
 
 ament_vendor(ogre_vendor
